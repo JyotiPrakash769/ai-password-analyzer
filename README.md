@@ -48,3 +48,19 @@ This is a production-ready Python project that evaluates password strength using
   - `utils.py` - Helper utilities like Shannon entropy calculation.
 - `app.py` - The frontend application using Streamlit.
 - `requirements.txt` - Python package dependencies.
+
+---
+
+## 🚀 Easy Deployment (Streamlit Community Cloud)
+
+Since this project builds entirely on Python and Streamlit, it can be deployed to the cloud for free in under two minutes!
+
+1. **Push your code to GitHub.** Ensure `requirements.txt` and `model/rf_model.joblib` are pushed.
+2. Visit [share.streamlit.io](https://share.streamlit.io/).
+3. Log in with your GitHub account.
+4. Click **New app**.
+5. Select your GitHub repository containing this project.
+6. Set the `Main file path` to `app.py`.
+7. Click **Deploy!**
+
+In about 60 seconds, your Pro-Level Password Analyzer will be live on the internet!
