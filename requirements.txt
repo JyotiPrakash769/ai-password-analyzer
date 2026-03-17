@@ -6,4 +6,4 @@ joblib
 plotly
 requests
 zxcvbn
-st-keyup
+streamlit-keyup
