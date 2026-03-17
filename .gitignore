@@ -1,0 +1,19 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Streamlit specific
+.streamlit/
+
+# Note: We are NOT ignoring the `model/` directory. 
+# We need `model/rf_model.joblib` committed so the app works on Streamlit cloud without having to run train_model.py.
