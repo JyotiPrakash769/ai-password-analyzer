@@ -42,9 +42,18 @@ st.markdown("*Analyze brute-force resistance, visualize weakness metrics, and ge
 try:
     predictor = PasswordPredictor()
     model_loaded = True
-except FileNotFoundError:
-    st.error("⚠️ **Model not found!**\nPlease run the training pipeline first by executing:\n`python -m src.train_model`")
-    model_loaded = False
+except Exception as e:
+    # If the model is missing or incompatible (due to scikit-learn version differences on Streamlit Cloud), retrain it beautifully on the fly!
+    st.info("🔄 First-time setup detected (or version mismatch). Compiling custom AI Neural Network on this server... Please wait.")
+    try:
+        from src.train_model import train_pipeline
+        train_pipeline()
+        predictor = PasswordPredictor()
+        st.success("✅ Neural Network successfully compiled and loaded!")
+        model_loaded = True
+    except Exception as retrain_error:
+        st.error(f"⚠️ **CRITICAL ERROR:** Failed to train or load the AI model!\n\nOriginal error: {str(e)}\n\nRetrain error: {str(retrain_error)}")
+        model_loaded = False
 
 if model_loaded:
     tab1, tab2 = st.tabs(["📊 Live Neural Analyzer", "✨ AI Key Generator"])
