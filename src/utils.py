@@ -33,7 +33,7 @@ def calculate_entropy(password):
 def estimate_crack_time(password):
     """
     Estimates the time required to brute force a password,
-    assuming an offline attack at 100 billion guesses per second.
+    assuming an offline attack at 100 billion guesses per second (MD5 speed baseline).
     """
     if not password:
         return "0 seconds"
@@ -51,6 +51,9 @@ def estimate_crack_time(password):
     guesses_per_second = 100_000_000_000 # 100 Billion per second
     seconds = combinations / guesses_per_second
     
+    return format_time(seconds)
+
+def format_time(seconds):
     if seconds < 1:
         return "Instantly"
     elif seconds < 60:
@@ -65,6 +68,45 @@ def estimate_crack_time(password):
         return f"{int(seconds / 31536000)} years"
     else:
         return f"{int(seconds / 3153600000)} centuries"
+
+def simulate_hash_cracking(password):
+    """
+    Simulates real-world cracking times against different hashing algorithms
+    using modern GPU speeds (e.g., RTX 4090 cluster).
+    """
+    if not password:
+        return {
+            "MD5": "0 seconds",
+            "SHA-256": "0 seconds",
+            "Bcrypt (Cost 12)": "0 seconds",
+            "Argon2id": "0 seconds"
+        }
+        
+    charset_size = 0
+    if any(c.islower() for c in password): charset_size += 26
+    if any(c.isupper() for c in password): charset_size += 26
+    if any(c.isdigit() for c in password): charset_size += 10
+    if any(c in string.punctuation for c in password): charset_size += 32
+    
+    if charset_size == 0:
+        charset_size = 1
+        
+    combinations = charset_size ** len(password)
+    
+    # Modern hardware hash rates approx (guesses per second)
+    speeds = {
+        "MD5 (Poor)": 100_000_000_000,         # 100 GH/s
+        "SHA-256 (Weak)": 20_000_000_000,      # 20 GH/s
+        "Bcrypt (Good)": 100_000,              # 100 kH/s
+        "Argon2 (Best)": 10_000                # 10 kH/s
+    }
+    
+    results = {}
+    for algo, speed in speeds.items():
+        secs = combinations / speed
+        results[algo] = format_time(secs)
+        
+    return results
 
 def generate_ai_password(length=16):
     """

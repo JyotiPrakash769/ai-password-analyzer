@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import plotly.graph_objects as go
 from src.predictor import PasswordPredictor
-from src.utils import estimate_crack_time, generate_ai_password, check_pwned_password
+from src.utils import estimate_crack_time, generate_ai_password, check_pwned_password, simulate_hash_cracking
 from st_keyup import st_keyup
 import zxcvbn
 
@@ -51,8 +51,29 @@ if model_loaded:
     
     with tab1:
         st.subheader("Live Typing Analysis")
+        
+        # Preserve password state across widget key changes
+        if "current_pwd" not in st.session_state:
+            st.session_state.current_pwd = ""
+            
+        # Toggle for password visibility
+        show_password = st.toggle("👁️ Show Password", value=False)
+        input_type = "default" if show_password else "password"
+        
+        # Using a dynamic key is necessary because Streamlit prevents changing widget 'type' on the same key
+        widget_key = "pwd_input_visible" if show_password else "pwd_input_hidden"
+        
         # Use st_keyup for real-time analysis without pressing enter
-        password_input = st_keyup("Enter a password to analyze:", type="password", key="pwd_input")
+        password_input = st_keyup(
+            "Enter a password to analyze:", 
+            value=st.session_state.current_pwd,
+            type=input_type, 
+            key=widget_key
+        )
+        
+        # Always update our backup state so it's not lost when toggling
+        if password_input is not None:
+            st.session_state.current_pwd = password_input
         
         if password_input:
             # 1. Advanced Metrics & Zxcvbn
@@ -116,6 +137,24 @@ if model_loaded:
 
             st.divider()
             
+            # 2.5 Real-world Hash Cracking Simulator
+            st.subheader("⏱️ Multi-Algorithm Hash Cracking Simulator")
+            st.markdown("*Estimated time to brute-force offline using high-end dedicated cracking hardware (e.g. 8x RTX 4090).*")
+            
+            crack_sim = simulate_hash_cracking(password_input)
+            sim_cols = st.columns(len(crack_sim))
+            
+            for i, (algo, time_str) in enumerate(crack_sim.items()):
+                with sim_cols[i]:
+                    # Make fast cracking times red, slow ones green
+                    if "seconds" in time_str or "Instantly" in time_str or "minutes" in time_str:
+                        st.markdown(f"**{algo}**<br><span style='color:#ff4a4a; font-size:1.2em; font-weight:bold;'>{time_str}</span>", unsafe_allow_html=True)
+                    elif "hours" in time_str or "days" in time_str:
+                        st.markdown(f"**{algo}**<br><span style='color:#ffb000; font-size:1.2em; font-weight:bold;'>{time_str}</span>", unsafe_allow_html=True)
+                    else:
+                        st.markdown(f"**{algo}**<br><span style='color:#00e676; font-size:1.2em; font-weight:bold;'>{time_str}</span>", unsafe_allow_html=True)
+
+            st.divider()
             # 3. Radar Chart + Composition
             rc1, rc2 = st.columns(2)
             
