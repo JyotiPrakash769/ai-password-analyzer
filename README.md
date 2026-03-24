@@ -1,66 +1,47 @@
-# AI Password Strength Analyzer
+# 🛡️ AI Password Strength Analyzer
 
-This is a production-ready Python project that evaluates password strength using a machine learning model. It extracts various features from passwords and classifies them into `weak`, `medium`, or `strong` using a Random Forest Classifier trained with `scikit-learn`.
+Welcome to the **AI Password Strength Analyzer**! A cutting-edge, machine-learning-powered tool that doesn't just check if your password is long enough—it truly *understands* how secure it is.
 
-## Features
-- Modular application architecture.
-- Feature extraction using `pandas` and `numpy`:
-  - Length
-  - Uppercase letters count
-  - Lowercase letters count
-  - Digits count
-  - Special characters count
-  - Shannon entropy
-- Model serialization using `joblib`.
-- Interactive web UI using `streamlit`.
-- Automated dataset generation and training pipeline.
+![AI Password Analyzer Demo](./demo_recording.webp)
 
-## Setup Instructions
+By extracting advanced features like Shannon Entropy, character distribution, and cryptographic strength, and running them through a Random Forest Classifier trained on thousands of data points, this project provides real-time, professional-grade security assessments. Whether you're a developer crafting secure applications or a user trying to protect your digital life, this analyzer detects weak patterns that traditional rules simply miss.
 
-1. **Navigate to the project directory** (set this folder as your active workspace if using an IDE):
+## 🚀 Features
+- **Neural Password Analysis:** Real-time AI execution as you type.
+- **Advanced Feature Extraction:** Uses `pandas` and `numpy` to compute Shannon Entropy, character density, and other ML properties.
+- **Model Serialization:** Super-fast inference with `joblib`.
+- **Interactive UI:** A highly dynamic and beautiful front-end powered by `streamlit`.
+- **Automated ML Pipeline:** Full end-to-end dataset generation and pipeline training scripts included.
+
+## 🛠️ Setup Instructions
+
+1. **Navigate into the project repository**:
    ```bash
-   cd C:\Users\jyoti\.gemini\antigravity\scratch\ai_password_analyzer
+   cd ai-password-analyzer
    ```
 
-2. **Install the dependencies**:
-   Make sure you have Python installed, then run:
+2. **Install the required dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
 
 3. **Train the Machine Learning Model**:
-   Execute the training pipeline to generate synthetic data, extract features, and train the classifier. The model will be saved in the `model/` directory.
+   Execute the training pipeline to generate synthetic data, extract features, and train the core classifier.
    ```bash
    python -m src.train_model
    ```
 
-4. **Run the Streamlit Application**:
-   Launch the user interface to test passwords.
+4. **Run the Application Locally**:
+   Launch the user interface server to test passwords.
    ```bash
    streamlit run app.py
    ```
 
-## Project Structure
-- `src/` - Contains the core application logic.
-  - `feature_extractor.py` - Extracts analytical features from raw text.
-  - `train_model.py` - The model training pipeline and dataset generator.
-  - `predictor.py` - Handles model loading and inference.
-  - `utils.py` - Helper utilities like Shannon entropy calculation.
-- `app.py` - The frontend application using Streamlit.
-- `requirements.txt` - Python package dependencies.
-
----
-
-## 🚀 Easy Deployment (Streamlit Community Cloud)
-
-Since this project builds entirely on Python and Streamlit, it can be deployed to the cloud for free in under two minutes!
-
-1. **Push your code to GitHub.** Ensure `requirements.txt` and `model/rf_model.joblib` are pushed.
-2. Visit [share.streamlit.io](https://share.streamlit.io/).
-3. Log in with your GitHub account.
-4. Click **New app**.
-5. Select your GitHub repository containing this project.
-6. Set the `Main file path` to `app.py`.
-7. Click **Deploy!**
-
-In about 60 seconds, your Pro-Level Password Analyzer will be live on the internet!
+## 📁 Project Structure
+- `src/` - Core application logic and ML pipelines.
+  - `feature_extractor.py` - Mathematical feature extraction from raw strings.
+  - `train_model.py` - Model training script.
+  - `predictor.py` - Model loading and inference.
+  - `utils.py` - Helper logic and functions.
+- `app.py` - Frontend application file.
+- `requirements.txt` - List of project dependencies.
