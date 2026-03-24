@@ -1,5 +1,7 @@
 # 🛡️ AI Password Strength Analyzer
 
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://REPLACE_WITH_YOUR_STREAMLIT_LINK_HERE.streamlit.app)
+
 Welcome to the **AI Password Strength Analyzer**! A cutting-edge, machine-learning-powered tool that doesn't just check if your password is long enough—it truly *understands* how secure it is.
 
 ![AI Password Analyzer Demo](./demo_recording.webp)
