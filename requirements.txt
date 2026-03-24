@@ -1,9 +1,10 @@
 pandas
 numpy
 scikit-learn
-streamlit
+streamlit>=1.30.0
 joblib
 plotly
 requests
 zxcvbn
 streamlit-keyup
+altair<5
